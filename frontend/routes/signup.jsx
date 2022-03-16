@@ -29,7 +29,7 @@ export default function SignUp() {
     .then(res => {
       if(res.status === 200){
         res.redirect('/');
-      } else{res.redirect('/')
+      } else{
         alert('username is already taken!');
       }
     })
