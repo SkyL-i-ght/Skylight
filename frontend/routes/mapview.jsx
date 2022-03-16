@@ -39,25 +39,50 @@ function MapView (props) {
     function genPlanes () {
       markers.forEach(marker => marker.setMap(null));
 
-      fetch('/api/flight', {
+      fetch('/api/flight:', {
         method: 'GET',
         body: JSON.stringify( {lat: center.lat, lng: center.lng })
       })
       .then(res => res.json()) 
-      .then(res => {
-        for (let i = 0; i < res.length; i++) {
-          markers.push( new google.maps.Marker({
-            position: {lat:res[i].lat, lng:res[i].lng},
-            icon: {...icon, rotation: -50 + res[i].direction},
+      .then(respon => {
+        for (let i = 0; i < respon.length; i++) {
+          const mark = new google.maps.Marker({
+            position: {lat:respon[i].lat, lng:respon[i].lng},
+            icon: {...icon, rotation: -50 + respon[i].direction},
             map: map,
-          }));
+          });
+
+          mark.addListener('click', () => {
+            fetch(`/api/flightinfo/:${res[i].callsign}`)
+            .then(res => res.json())
+            .then(res => {
+              const contentstring = `
+              <div>
+              <p>Callsign: ${respon[i].callsign}</p></br>
+              <p>Destination: ${res.arrival.airport}</p></br>
+              <p>Arrival Timezone: ${res.arrival.timezone}</p></br>
+              <p>Altitude: ${respon[i].altitude}</p></br>
+              <button>Add to Favorites</button>
+              </div>
+              `
+              const infoWindow = new window.google.maps.InfoWindow({
+                content: contentstring
+              });
+              infowindow.open({
+                anchor: marker,
+                map,
+                shouldFocus: false,
+              })
+            })
+          });
+
         };
       })
-  
     }
 
     genPlanes();
     setInterval((() => genPlanes()), 15000);
+    
   }, []);
   
   const onUnmount = React.useCallback((map) => {
