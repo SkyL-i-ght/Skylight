@@ -17,10 +17,23 @@ export default function SignUp() {
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
-      username: data.get('username'),
-      password: data.get('password'),
-    });
+    fetch('/api/user/signup',
+    {
+      method: 'POST',
+      body: JSON.stringify({username: data.username, password: data.password})
+    })
+    .then(res => {
+      console.log(res);
+      res.json()
+    })
+    .then(res => {
+      if(res.status === 200){
+        res.redirect('/');
+      } else{res.redirect('/')
+        alert('username is already taken!');
+      }
+    })
+    .catch(err => console.log(err));
   };
 
   return (

@@ -19,10 +19,10 @@ export default function SignIn() {
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
-      username: data.get('username'),
-      password: data.get('password'),
-    });
+    fetch(`/api/user/login`,{
+      method: 'POST',
+      body: JSON.stringify({username: data.username, password: data.password})
+    })
   };
 
   return (
