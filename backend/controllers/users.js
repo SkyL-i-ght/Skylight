@@ -27,7 +27,6 @@ userController.signUp = (req, res, next) => {
         }
         return next(err);
       }
-      /* All other errors */
       return next(e);
     });
   
@@ -35,69 +34,36 @@ userController.signUp = (req, res, next) => {
 
 userController.login = (req, res, next) => {
 
-  /* Step 1: Validate input to pass in as format we are expecting*/
-  if (!req.body.userInfo 
-      || typeof req.body.userInfo.email !== 'string' 
-      || typeof req.body.userInfo.password !== 'string') {
-  /* Error handling if the username and/or password do not meet the specifications defined above */
+  const q = `SELECT _id, password FROM users WHERE username = $1;`;
   const err = {
-    log: 'Invalid email or password',
-    status: 400,
-    message: {err: 'Please provide a valid email or password'}
-  }
-  return next(err);
-}
-
-  /* Step 2: Verify username and password with the hash stored in the database */
-
-  const queryString = `SELECT _id, pwd FROM app.users WHERE email = $1;`;
-  const err = {
-    log: 'Incorrect email and/or password',
+    log: 'Incorrect username and/or password',
     status: 401,
-    message: {err: 'Incorrect email and/or password'}
+    message: {err: 'Incorrect username and/or password'}
   };
-  db.runQuery(queryString, [req.body.userInfo.email])
+  pool.query(q, [req.body.username])
     .then(r => {
       if (!r.rows.length) return next(err);
       res.locals.userId = r.rows[0]._id;
-      return bcrypt.compare(req.body.userInfo.password, r.rows[0].pwd);
+      return bcrypt.compare(req.body.password, r.rows[0].password);
     })
     .then(result => {
-      // hash plaintext password and compare with hash stored in database
       if(!result) return next(err);
-
-      /* Step 3: Create a session cookie and store it in the database */
-      // 1 generate ssid using uuid
       const ssid = uuid.v4();
-      // 2 add ssid to database
-      const ssidString = `INSERT INTO app.sessions (user_id, ssid) VALUES ($1, $2) RETURNING ssid;`;
+      const ssidString = `INSERT INTO sessions (user_id, ssid) VALUES ($1, $2) RETURNING ssid;`;
       const queryParams = [res.locals.userId, ssid];
-      return db.runQuery(ssidString, queryParams);
+      return pool.query(ssidString, queryParams);
     })
-    .then(r => {
-      // add password to volatile local cache for AES encryption/decryption
-      globalCache.set(res.locals.userId, req.body.userInfo.password);
-      // 3 add ssid cookie to res
-      res.cookie('ssid', r.rows[0].ssid, { maxAge: 1000 * 60 * 60 * 24 * 7, httpOnly: true });
-      // set the values in the userAuth object
-      res.locals.userAuth = {
-        authenticated: true,
-        userId: res.locals.userId
-      };
-
-      // 4 call next();
+    .then(sessions => {
+      res.cookie('ssid', sessions.rows[0].ssid, { maxAge: 1000 * 60 * 60 * 24 * 30, httpOnly: true });
       return next();
     })
     .catch(e => next(e));
 }
 
 userController.logout = (req, res, next) => {
-  // remove password from local cache
-  globalCache.clear(res.locals.userAuth.userId);
-  // this will overwrite prev ssid and end curr session 
-  res.cookie('ssid', '', { maxAge: 1000 * 60 * 60 * 24 * 7, httpOnly: true });
+  res.cookie('ssid', '', { maxAge: 1000 * 60 * 60 * 24 * 30, httpOnly: true });
   return next();
-}
+};
 
 
 // checking session cookie, making sure its a valid session and assoc w/ user if it is 
@@ -118,10 +84,10 @@ userController.authenticate = (req, res, next) => {
   } 
 
   // Step 2: query database on sessions to get user id
-  const ssidQuery = `SELECT user_id FROM app.sessions WHERE ssid = $1`;
+  const ssidQuery = `SELECT user_id FROM sessions WHERE ssid = $1`;
   const params = [req.cookies.ssid];
   // Step 2.1: if the result is not empty then update the res.locals.userAuth object
-  db.runQuery(ssidQuery, params)
+  pool.query(ssidQuery, params)
     .then(r => {
       
       if (!r.rows.length) {

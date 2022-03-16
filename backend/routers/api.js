@@ -20,8 +20,12 @@ api.post('/user/signup', userController.signUp, (req, res) => {
   res.json(res.locals);
 });
 
-api.post('/user/login', (req, res) => {
-  res.send('login');
+api.post('/user/login', userController.login, (req, res) => {
+  res.send('Success');
+});
+
+api.post('/user/logout', userController.logout, (req, res) => {
+  res.send('Success');
 });
 
 api.post('/favorites/add', (req, res) => {
