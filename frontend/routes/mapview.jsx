@@ -1,52 +1,51 @@
 import React from 'react';
 import { GoogleMap, useJsApiLoader } from '@react-google-maps/api';
-// const [center, setCenter] = React.useState<google.maps.LatLngLiteral>({
-//   lat: 0,
-//   lng: 0,
-// });
+import { useLocation } from 'react-router-dom';
+import AircraftController from '../components/AircraftController.jsx'
 
 function MapView (props) {
-  // const { browsLat, browsLong } = props;
-
-  // const containerStyle = {
-  //   width: '600px',
-  //   height: '600px',
-  // };
   
-  // const center = {
-  //   lat: browsLat,
-  //   lng: browsLong,
-  // }
+  const location = useLocation();
+  const center = { ...location.state.coords };
+  console.log(center)
   
-  // const { isLoaded } = useJsApiLoader({
-  //   id: 'google-map-script',
-  //   // googleMapsApiKey: process.env.REACT_APP_GOOGLE_API
-  // });
-
-  // const [map, setMap] = React.useState(null);
-
-  // const onLoad = React.useCallback((map) => {
-  //   const bounds = new window.google.maps.LatLngBounds();
-  //   map.fitBounds(bounds);
-  //   setMap(map);
-  // }, []);
+  const containerStyle = {
+    width: '600px',
+    height: '600px',
+    };
   
-  // const onUnmount = React.useCallback((map) => {
-  //   setMap(null);
-  // }, []);
+  const { isLoaded } = useJsApiLoader({
+    id: 'google-map-script',
+    googleMapsApiKey: ''
+  });
 
-  // return isLoaded ? (
-  //   <GoogleMap
-  //     mapContainerStyle = { containerStyle }
-  //     center = { center }
-  //     zoom = { 10 }
-  //     onLoad = { onLoad }
-  //     onUnmount = { onUnmount }
-  //   >
-  //     {/*Children */}
-  //     <></>
-  //   </GoogleMap>
-  // ) : <></>
+  const [map, setMap] = React.useState(null);
+
+  const onLoad = React.useCallback((map) => {
+    console.log(center);
+    const bounds = new window.google.maps.LatLngBounds({ lat: center.lat-0.05, lng: center.lng-0.05 });
+    bounds.extend({ lat: center.lat+0.05, lng: center.lng+0.05 });
+    console.log(bounds)
+    map.fitBounds(bounds);
+    setMap(map);
+  }, []);
+  
+  const onUnmount = React.useCallback((map) => {
+    setMap(null);
+  }, []);
+
+  return isLoaded ? (
+    <GoogleMap
+      mapContainerStyle = { containerStyle }
+      center = { center }
+      onLoad = { onLoad }
+      zoom = { 18 }
+      onUnmount = { onUnmount }
+    >
+      {<AircraftController />}
+      <></>
+    </GoogleMap>
+  ) : <></>
 };
 
 export default MapView;

@@ -9,9 +9,11 @@ import Dataview from "./routes/dataview.jsx";
 render(
   <BrowserRouter> 
     <Routes>
-        <Route path='/' element={<App />} />
+        <Route path='/' element={<App />}>
         <Route path='mapview' element={<Mapview />} />
         <Route path='dataview' element={<Dataview />}/>
+        </Route> 
+        {/* not sure if we need this closing route element */}
     </Routes>
   </BrowserRouter>,
 
