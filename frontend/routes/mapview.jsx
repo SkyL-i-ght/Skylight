@@ -35,6 +35,10 @@ function MapView (props) {
   }, []);
 
   return isLoaded ? (
+    <div> 
+      <div> 
+        <h1>Test</h1>
+      </div>
     <GoogleMap
       mapContainerStyle = { containerStyle }
       center = { center }
@@ -44,7 +48,8 @@ function MapView (props) {
     >
       {<AircraftController />}
       <></>
-    </GoogleMap>
+    </GoogleMap> 
+    </div>
   ) : <></>
 };
 

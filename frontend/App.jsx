@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Outlet, Link } from 'react-router-dom';
 import Navbar from './components/Navbar.jsx';
+import { Button } from '@mui/material';
 
 class App extends Component {
   constructor(props) {
@@ -58,8 +59,11 @@ class App extends Component {
   render() {
     return(
       <div>
-        <Navbar/>
-        <Link to='/mapview' state={{ coords: this.state.coords, bindingBox: this.state.bindingBox }}>MapView</Link>
+        <div>
+          <h1> Find planes near me</h1>
+          <Button component={ Link } to={'/mapview'} state={{ coords: this.state.coords, bindingBox: this.state.bindingBox }}> My button </Button>
+        </div>
+        {/* <Link to='/mapview' state={{ coords: this.state.coords, bindingBox: this.state.bindingBox }}>MapView</Link> */}
         <Outlet />
       </div>
     );
