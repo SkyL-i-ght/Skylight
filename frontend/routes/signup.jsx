@@ -3,9 +3,6 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
-// import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
@@ -13,19 +10,16 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Plane from '../assets/plane2.gif';
-import { color } from '@mui/system';
 import { Outlet, Link } from 'react-router-dom';
-
-
 
 const theme = createTheme();
 
-export default function SignIn() {
+export default function SignUp() {
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     console.log({
-      username: data.get('username'),
+      email: data.get('email'),
       password: data.get('password'),
     });
   };
@@ -45,30 +39,33 @@ export default function SignIn() {
           <Avatar 
           src={Plane}
           sx={{ width: 80, height: 80 }}>
+          
           </Avatar>
           <Typography component="h1" variant="h5">
-            Sign in to SkyLight
+            Sign up for SkyLight
           </Typography>
-          <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              id="username"
-              label="Username"
-              name="username"
-              autoFocus
-            />
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              name="password"
-              label="Password"
-              type="password"
-              id="password"
-            />
-
+          <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
+            <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
+                  id="username"
+                  label="Username"
+                  name="username"
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
+                  name="password"
+                  label="Password"
+                  type="password"
+                  id="password"
+                />
+              </Grid>
+            </Grid>
             <Button
               style= {{ backgroundColor: "#EF8354" }}
               type="submit"
@@ -76,18 +73,16 @@ export default function SignIn() {
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
-              Sign In
+              Sign Up
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>
-              <Button className="signinbtn" style={{ fontSize: '14px', color: "#4EA3DA", backgroundColor: "white" }} component={ Link } to={'/signup'}> Don't have an account? Sign up</Button>
+              <Button className="signupbtn" style={{ fontSize: '14px', color: "#4EA3DA", backgroundColor: "white" }} component={ Link } to={'/signin'}> Already have an account? Sign in</Button>
               </Grid>
             </Grid>
           </Box>
         </Box>
-
       </Container>
     </ThemeProvider>
   );
 }
-

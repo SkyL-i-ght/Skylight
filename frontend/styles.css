@@ -57,6 +57,16 @@ margin-left: -30px;
     justify-content: center;
 
   }
+.signinbtn {
+  text-transform: unset !important;
+  color: black;
+}
+
+.signupbtn {
+  text-transform: unset !important;
+  color: black;
+}
+
 
 
 
