@@ -65,43 +65,18 @@ userController.logout = (req, res, next) => {
   return next();
 };
 
-
-// checking session cookie, making sure its a valid session and assoc w/ user if it is 
-//global middleware, import into server js 
 userController.authenticate = (req, res, next) => {
-
-  console.log('authenticate middleware');
-  res.locals.userAuth = {
-    authenticated: false,
-    userId: null
-  };
-
-  
-  // Step 1: check the ssid cookie and get its value
-  if(!req.cookies.ssid || !uuid.validate(req.cookies.ssid) || !uuid.version === 4) {
-    console.log(`No valid ssid found`);
-    return next();
-  } 
-
-  // Step 2: query database on sessions to get user id
   const ssidQuery = `SELECT user_id FROM sessions WHERE ssid = $1`;
   const params = [req.cookies.ssid];
-  // Step 2.1: if the result is not empty then update the res.locals.userAuth object
   pool.query(ssidQuery, params)
     .then(r => {
-      
-      if (!r.rows.length) {
-        console.log(`User not authenticated`);
-        return next();
-      } 
-      res.locals.userAuth.userId = r.rows[0].user_id;
-      res.locals.userAuth.authenticated = true;
-      console.log(`User ${res.locals.userAuth.userId} authenticated`)
+      if (!r.rows.length) res.locals.userId = null;
+      else res.locals.userId = r.rows[0].user_id;
+      console.log(`User ${res.locals.userId} authenticated`)
       return next();
     })
-    .catch(e => next(e));
-  
-}
+    .catch(e => next());
+};
 
 
 module.exports = userController;
