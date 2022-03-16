@@ -37,7 +37,6 @@ function MapView (props) {
 
   return isLoaded ? (
     <div className="banner"> 
-    <Navbar/>
       <div> 
         <GoogleMap
       mapContainerStyle = { containerStyle }

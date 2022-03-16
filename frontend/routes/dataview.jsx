@@ -5,7 +5,7 @@ import Navbar from '../components/Navbar.jsx';
 function DataView(props) {
 
 return (
-  <Navbar/>
+  <h1>My Destinations</h1>
 );
 }
 

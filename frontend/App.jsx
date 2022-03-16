@@ -62,7 +62,6 @@ class App extends Component {
     return(
       
       <div className="mainContainer">
-        <Navbar/>
         <div >
           <div className="overlay">
           <img className="plane" src={Plane} />

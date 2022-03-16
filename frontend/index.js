@@ -11,22 +11,20 @@ import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
+import Navbar from './components/Navbar.jsx';
 
 
 render(
   
   <BrowserRouter> 
-
+  <Navbar/>
     <Routes>
         <Route path='/' element={<App />} />
         <Route path='mapview' element={<Mapview />} />
         <Route path='dataview' element={<Dataview />} />
         <Route path='signin' element={<SignIn />} />
         <Route path='signup' element={<SignUp />} />
-
-        
         </Routes>
-       
   </BrowserRouter>,
 
   document.getElementById('root')
