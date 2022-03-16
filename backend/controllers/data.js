@@ -1,8 +1,6 @@
 require('dotenv').config();
 const express = require('express');
 const axios = require('axios');
-const { LocalMallOutlined } = require('@material-ui/icons');
-
 
 const data = {};
 
@@ -17,13 +15,10 @@ data.getFlightsData = (req, res, next) => {
     lomax: lng + 1
   };
 
-  console.log(params);
-
   axios.get('https://opensky-network.org/api/states/all', { params })
   .then(response => {
-    const opensky = response.data.states.map(elem => {
-
-      const flight = {
+    res.locals.opensky = response.data.states.map(elem => {
+      return {
         id: elem[0],
         callsign: elem[1].trim(),
         lastContact: Math.max(elem[3], elem[4]),
@@ -33,18 +28,7 @@ data.getFlightsData = (req, res, next) => {
         altitude: Math.max(elem[13], elem[7]),
         speed: elem[9]
       };
-
-      const planePromise = new Promise((resolve, reject) => {
-        axios.get('https://api.aviationstack.com/v1/flights')
-      });
-
-      return planePromise;
-      
     });
-    return Promise.allSettled(opensky);
-  })
-  .then(r => {
-    res.locals.results = r;
     return next();
   })
   .catch(e => {
@@ -52,6 +36,12 @@ data.getFlightsData = (req, res, next) => {
   })
   
 };
+
+data.getFlightInfo = (req, res, next) {
+
+
+  return next();
+}
 
 
 module.exports = data;

@@ -8,7 +8,7 @@ const api = express.Router();
 api.get('/test', (req, res) => res.send('Success'));
 
 api.get('/flights', validation.validateCoordinates, data.getFlightsData, (req, res, next) => {
-  res.json(res.locals.results);
+  res.json(res.locals.openski);
 });
 
 module.exports = api;
