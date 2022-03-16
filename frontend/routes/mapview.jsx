@@ -2,7 +2,6 @@ import React from 'react';
 import { GoogleMap, useJsApiLoader } from '@react-google-maps/api';
 import { useLocation } from 'react-router-dom';
 import AircraftController from '../components/AircraftController.jsx'
-import Navbar from '../components/Navbar.jsx';
 
 function MapView (props) {
   

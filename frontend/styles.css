@@ -1,21 +1,11 @@
 * {
   margin: 0;
   padding: 0;
-
-}
-
-body {
-  background-color: "#2D3142";
 }
 
 .myToolbar {
   width: 50px;
   height: 50px;
-}
-
-.logo {
-width: 300px;
-margin-left: -30px;
 }
 
 .mainContainer {
@@ -24,32 +14,29 @@ margin-left: -30px;
   flex-direction: column;
   align-items: center;
   margin-top: 100px;
-  }
+}
 
-  .findPlanesButton {
+.findPlanesButton {
     position: absolute;
     top: 250px;
     text-transform: unset !important;
+}
 
-
-  }
-
-  .plane {
+.plane {
     position: absolute;
     top: 200px;
     left: 360px;
     width: 380px;
+}
 
-  }
-
-  .banner {
+.banner {
     display: flex;
     margin-top: 130px;
     height: 800px;
     width: 100%;
     justify-content: center;
+}
 
-  }
 .signinbtn {
   text-transform: unset !important;
   color: black;
@@ -66,14 +53,14 @@ margin-left: -30px;
   color: black;
 }
 
-.test {
+.buttondiv {
   display: flex;
   flex-direction: column;
   padding: 10px;
   justify-content: space-between
 }
 
-.test2 {
+.btnpadding {
   display: flex;
   flex-direction: column;
   padding-top: 10px;
