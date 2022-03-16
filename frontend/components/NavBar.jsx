@@ -1,30 +1,25 @@
-import React, { Component } from 'react';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
-import Menu from '@mui/material/Menu';
-import MenuIcon from '@mui/icons-material/Menu';
-import Container from '@mui/material/Container';
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
-import Tooltip from '@mui/material/Tooltip';
-import MenuItem from '@mui/material/MenuItem';
-
-class NavBar extends Component {
-  constructor(props) {
-    super(props);
-  }
-  render() {
-    return(
-
-        
+import React from 'react';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import { makeStyles } from '@material-ui/core/styles';
+import Typography from '@material-ui/core/Typography';
+import IconButton from '@material-ui/core/IconButton';
+import Button from '@material-ui/core/Button';
+import MenuIcon from '@material-ui/icons/Menu';
+import { flexbox } from '@material-ui/system';
 
 
-    );
-  
-}
-}
+const Navbar = () => {
+  return (
+    <AppBar position="static">
+      <Toolbar className ="myToolbar" > 
+       SkyLight
+    <IconButton edge="start" color="inherit" aria-label="menu">
+      <MenuIcon sx={{ marginLeft: "auto" }}/>
+    </IconButton>
+      </Toolbar>
+    </AppBar>
+  );
+};
 
-export default NavBar;
+export default Navbar;
