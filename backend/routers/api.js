@@ -1,5 +1,5 @@
 require('dotenv').config();
-const { SettingsApplicationsTwoTone } = require('@material-ui/icons');
+const userController = require('../controllers/users');
 const express = require('express');
 const data = require('../controllers/data');
 const validation = require('../controllers/validation');
@@ -16,8 +16,8 @@ api.get('/flightinfo/:callsign', data.getFlightDetails, (req, res) => {
   res.json(res.locals.flightDetails);
 });
 
-api.post('/user/signup', (req, res) => {
-  res.send('signup');
+api.post('/user/signup', userController.signUp, (req, res) => {
+  res.json(res.locals);
 });
 
 api.post('/user/login', (req, res) => {

@@ -1,7 +1,6 @@
-const db = require('../models/dbModel.js');
+const pool = require('../models/db');
 const bcrypt = require('bcrypt');
 const uuid = require('uuid');
-
 
 const SALT_ROUNDS = 12;
 
@@ -9,40 +8,22 @@ const userController = {};
 
 userController.signUp = (req, res, next) => {
 
-  /* Step 1: Validate input */
-  if(!req.body.userInfo 
-      || typeof req.body.userInfo.email !== 'string' 
-      || typeof req.body.userInfo.name !== 'string' 
-      || typeof req.body.userInfo.password !== 'string') {
-    /* Error handling if the username and/or password do not meet the specifications defined above */
-    const err = {
-      log: 'Invalid email or password',
-      status: 400,
-      message: {err: 'Please provide a valid email and password'}
-    }
-    return next(err);
-  }
-  
-  /* Step 2: Create new user in database */
-  const queryString =  `INSERT INTO app.users (email, name, pwd) VALUES ($1, $2, $3) RETURNING _id;`;
-  bcrypt.hash(req.body.userInfo.password, SALT_ROUNDS)
-    .then(hash => {
-      return db.runQuery(queryString, [req.body.userInfo.email, req.body.userInfo.name, hash]); // returns a promise
-    })
+  const q =  `INSERT INTO users (username, password) VALUES ($1, $2) RETURNING _id;`;
+  bcrypt.hash(req.body.password, SALT_ROUNDS)
+    .then(hash => pool.query(q, [req.body.username, hash]))
     .then(r => {
-      /* New user successfully created */
-      res.locals.newUserInfo = {id: r.rows[0]._id};
-      console.log(`User ${r.rows[0]._id} created`);
+      res.locals.id = r.rows[0]._id;
+      console.log(`User ${res.locals.id} created`);
       return next();
     })
     .catch(e => {
       /* Error handling if the username already exists */
-      if (e.constraint === 'users_email_key') {
+      if (e.constraint === 'users_username_key') {
           // constraint is returned from pg command/error when same username is entered 
         const err = {
-          log: 'This email already exists.',
+          log: 'This username already exists.',
           status: 400,
-          message: {err: 'This email already exists.'}
+          message: {err: 'This username already exists.'}
         }
         return next(err);
       }
