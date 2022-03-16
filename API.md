@@ -90,6 +90,24 @@ A sample response would contain a single object like this:
 }
 ```
 
+## Get user's destinations
+
+Make a `GET` request to `/api/favorites/:id` where `id` is the user id.
+
+The response body will look like this:
+
+```JSON
+[
+  {
+    "id": 1,
+    "name": "Kona International Airport, Honolulu, USA",
+    "description": "Beautiful city with magnificent views of the Pacific Ocean and delightful beaches."
+  },
+  ...
+]
+
+```
+
 ## Add to destinations endpoint
 Make a `POST` request to `/api/favorites/add`.
 
