@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Outlet, Link } from 'react-router-dom';
 import { Button } from '@mui/material';
 import Plane from '../frontend/assets/plane2.gif';
-import Navbar from './components/Navbar.jsx';
+import Navbar from '../frontend/components/Navbar.jsx';
 
 
 class App extends Component {
