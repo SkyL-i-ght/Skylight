@@ -1,5 +1,18 @@
 # API Endpoints
 
+## Summay of endpoints
+
+- `GET` to `/api/test` (returns `Success`)
+- `GET` to `/api/flights` (requires `lat` and `lng` params)
+- `GET` to `/api/flightinfo/:callsign` (requires `callsign`)
+- `POST` to `/api/user/signup` (requires `username` and `password` in request body)
+- `POST` to `/api/user/login` (requires `username` and `password` in request body)
+- `POST` to `/api/user/logout`
+- `GET` to `/api/favorites`
+- `POST` to `/api/favorites/add` (requires `name` and `description` in request body)
+- `DELETE` to `/api/favorites/delete` (requires `id` in request body)
+
+
 ## Flights endpoint
 
 Make a `GET` request to `/api/flights?lat=35&lng=-118` to get flight information. 
@@ -92,7 +105,7 @@ A sample response would contain a single object like this:
 
 ## Get user's destinations
 
-Make a `GET` request to `/api/favorites/:id` where `id` is the user id.
+Make a `GET` request to `/api/favorites`.
 
 The response body will look like this:
 
@@ -105,7 +118,6 @@ The response body will look like this:
   },
   ...
 ]
-
 ```
 
 ## Add to destinations endpoint
@@ -171,6 +183,12 @@ A sample response would look like:
 
 ```JSON
 {
-  "valid": true
+  "id": 3
 }
 ```
+
+## User logout
+
+Make a `POST` request to `/api/user/logout`.
+
+No request body or params necessary.
