@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Outlet, Link } from 'react-router-dom';
+import Navbar from './components/Navbar.jsx';
 
 class App extends Component {
   constructor(props) {
@@ -57,6 +58,7 @@ class App extends Component {
   render() {
     return(
       <div>
+        <Navbar/>
         <Link to='/mapview' state={{ coords: this.state.coords, bindingBox: this.state.bindingBox }}>MapView</Link>
         <Outlet />
       </div>
