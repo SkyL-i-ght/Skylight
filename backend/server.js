@@ -1,30 +1,29 @@
-// require express 
-// setup a server port 
-// send static files such as html files and styling files
-// setup router handlers to receive and send back responses to the front-end
-const express = require('express'); // make sure to npm install express
+require('dotenv').config();
+const express = require('express');
 const app = express();
-const PORT = 3434;
-const path = require('path'); // make sure to npm install path
+const PORT = process.env.PORT;
+const api = require('./routers/api');
 
+app.use(express.json());
 
+app.use('/api', api);
 
-//route error handler 
-app.use((req,res)=>res.sendStatus(400));
+// 404 error handler 
+app.use('*', (req,res) => res.sendStatus(404));
+
 // Global Error Handler
 app.use((err, req, res, next) => {
+  console.log(err);
     const defaultErr = {
       log: 'Express error handler caught unknown middleware error',
-      status: 400,
-      message: { err: 'An error occurred' },
+      status: 500,
+      message: { err: 'An error occurred' }
     };
     const errorObj = Object.assign({}, defaultErr, err);
     console.log(errorObj.log);
     return res.status(errorObj.status).json(errorObj.message);
-  });
+});
 
-
-
-app.listen(PORT, ()=>{
-    console.log(`Listening on Port:${PORT}`);
-})
+app.listen(PORT, () => {
+    console.log(`Listening on port: ${PORT}`);
+});
