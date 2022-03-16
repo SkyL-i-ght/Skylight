@@ -2,13 +2,10 @@
 
 ## Flights endpoint
 
-Make a `GET` request to `/api/flights` to get flight information. A sample request body would look like this:  
-```JSON
-{
-    "lat": 35.78,
-    "lng": -78.12
-}
-```
+Make a `GET` request to `/api/flights?lat=35&lng=-118` to get flight information. 
+You need to pass in a `lat` key and a `lng` key in the parameters. They need to be valid latitude and longitude coordinates.
+
+
 A sample response would look like this:
 ```JSON
 [

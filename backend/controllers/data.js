@@ -4,20 +4,26 @@ const axios = require('axios');
 const data = {};
 
 data.getFlightsData = (req, res, next) => {
-  const lat = parseFloat(req.body.lat);
-  const lng = parseFloat(req.body.lng);
+  const lat = parseFloat(req.query.lat);
+  const lng = parseFloat(req.query.lng);
+
+  console.log(lat, lng);
 
   const params = {
-    lamin: lat - 0.05,
-    lamax: lat + 0.05,
-    lomin: lng - 0.05,
-    lomax: lng + 0.05
+    lamin: lat - 1,
+    lamax: lat + 1,
+    lomin: lng - 1,
+    lomax: lng + 1
   };
 
   axios.get('https://opensky-network.org/api/states/all', { params })
   .then(response => {
 
     console.log(response);
+    if (!response.data.states) {
+      res.locals.opensky = [];
+      return next();
+    }
     res.locals.opensky = response.data.states.map(elem => {
       return {
         id: elem[0],
