@@ -92,7 +92,7 @@ A sample response would contain a single object like this:
 
 ## Get user's destinations
 
-Make a `GET` request to `/api/favorites/:id` where `id` is the user id.
+Make a `GET` request to `/api/favorites`.
 
 The response body will look like this:
 

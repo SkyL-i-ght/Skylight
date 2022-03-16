@@ -75,7 +75,10 @@ userController.authenticate = (req, res, next) => {
       console.log(`User ${res.locals.userId} authenticated`)
       return next();
     })
-    .catch(e => next());
+    .catch(e => {
+      res.locals.userId = null;
+      return next();
+    });
 };
 
 
