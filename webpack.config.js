@@ -7,9 +7,6 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, 'dist'),
   },
-  // resolve: {
-  //   fallback : {'os': require.resolve('os-browserify/browser')}
-  // },
   module: {
     rules: [
       {
@@ -32,12 +29,16 @@ module.exports = {
   },
     ]
   },
+
 devServer: {
   static: {
     directory: path.resolve(__dirname, './build'),
     publicPath: path.resolve(__dirname, './build'),
   },
-  port: 8080
+  port: 8080,
+  proxy: {
+    '/api': 'http://localhost:3000'
+  }
 },
   plugins: [
     new HtmlWebpackPlugin({
