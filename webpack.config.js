@@ -27,9 +27,8 @@ module.exports = {
         use: ["style-loader", "css-loader"],
     },
     {
-      test: /\.(png|jp(e*)g|svg|gif)$/,
-      include: path.resolve(__dirname, "./client/assets"),
-      use: ['file-loader'],
+      test: /\.(png|svg|jpe?g|gif)$/i,
+      loader: 'file-loader',
   },
     ]
   },

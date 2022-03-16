@@ -4,5 +4,91 @@
 }
 
 .myToolbar {
-  justify-content: space-between;
+  width: 50px;
+  height: 50px;
 }
+
+.mainContainer {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 100px;
+}
+
+.findPlanesButton {
+    position: absolute;
+    top: 250px;
+    text-transform: unset !important;
+}
+
+.plane {
+    position: absolute;
+    top: 200px;
+    left: 360px;
+    width: 380px;
+}
+
+.banner {
+    display: flex;
+    margin-top: 130px;
+    height: 800px;
+    width: 100%;
+    justify-content: center;
+}
+
+.signinbtn {
+  text-transform: unset !important;
+  color: black;
+}
+
+.dataviewbtn {
+  text-transform: unset !important;
+  color: black;
+  margin-bottom: 500px;
+}
+
+.signupbtn {
+  text-transform: unset !important;
+  color: black;
+}
+
+.buttondiv {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  justify-content: space-between
+}
+
+.btnpadding {
+  display: flex;
+  flex-direction: column;
+  padding-top: 10px;
+  justify-content: space-between
+}
+
+.destCard {
+  width: 1000px;
+}
+
+.accordian {
+  margin-top: 100px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center
+}
+
+.myDests {
+  margin-bottom: 60px;
+}
+
+
+
+
+
+
+
+
+
+
