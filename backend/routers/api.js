@@ -11,4 +11,8 @@ api.get('/flights', validation.validateCoordinates, data.getFlightsData, (req, r
   res.json(res.locals.opensky);
 });
 
+api.get('/flightinfo/:callsign', data.getFlightDetails, (req, res, next) => {
+  res.json(res.locals.flightDetails);
+});
+
 module.exports = api;
