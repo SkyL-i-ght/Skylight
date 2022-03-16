@@ -23,8 +23,7 @@ export default function SignUp() {
       body: JSON.stringify({username: data.username, password: data.password})
     })
     .then(res => {
-      console.log(res);
-      res.json()
+      return res.json()
     })
     .then(res => {
       if(res.status === 200){

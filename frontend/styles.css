@@ -17,16 +17,17 @@
 }
 
 .findPlanesButton {
-    position: absolute;
-    top: 250px;
-    text-transform: unset !important;
+  position: relative;
+  bottom: 100px;
+  right: 200px;
+  text-transform: unset !important;
 }
 
 .plane {
-    position: absolute;
-    top: 200px;
-    left: 360px;
-    width: 380px;
+  position: relative;
+  top: 60px;
+  right: 70px;
+  width: 380px;
 }
 
 .banner {
