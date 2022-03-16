@@ -55,10 +55,32 @@ margin-left: -30px;
   color: black;
 }
 
+.dataviewbtn {
+  text-transform: unset !important;
+  color: black;
+  margin-bottom: 500px;
+}
+
 .signupbtn {
   text-transform: unset !important;
   color: black;
 }
+
+.test {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  justify-content: space-between
+}
+
+.test2 {
+  display: flex;
+  flex-direction: column;
+  padding-top: 10px;
+  justify-content: space-between
+}
+
+
 
 
 

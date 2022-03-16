@@ -67,7 +67,7 @@ class App extends Component {
           <div className="overlay">
           <img className="plane" src={Plane} />
           
-          <Button variant="contained" style={{ fontSize: '18px', color: "#F79256", backgroundColor: "white" }} className="findPlanesButton" component={ Link } to={'/mapview'} state={{ coords: this.state.coords, bindingBox: this.state.bindingBox }}> Find planes near me </Button>
+          <Button variant="contained" style={{ fontSize: '18px', color: "white", backgroundColor: "#F79256" }} className="findPlanesButton" component={ Link } to={'/mapview'} state={{ coords: this.state.coords, bindingBox: this.state.bindingBox }}> Identify plane above me </Button>
           </div>
          
         </div>

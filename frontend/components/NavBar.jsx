@@ -26,54 +26,61 @@ export default function Navbar() {
   };
 
   return (
-      <AppBar >
-        <Toolbar>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}> 
+    <AppBar style={{backgroundColor: "#4EA3DA"}} >
+      <Toolbar>
+        <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}> 
           SkyLight
-          </Typography>
-        
-            <div>
-              <IconButton
-                size="large"
-                aria-controls="menu-appbar"
-                aria-haspopup="true"
-                onClick={handleMenu}
-                color="inherit"
-              >
-                <AccountCircle />
-              </IconButton>
-              <Menu
-                id="appbar"
-                anchorEl={anchorEl}
-                anchorOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
-                }}
-                keepMounted
-                transformOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
-                }}
-                open={Boolean(anchorEl)}
-                onClose={handleClose}
-              >
-                  <div> 
-                    <Button
-                    id="destination" 
-                    variation="contained" 
-                    className="signinbtn" 
-                    style={{ fontSize: '14px', color: "#EF8354", backgroundColor: "white" }} 
-                    component={ Link } to={'/dataview'}> 
-                    My Destinations 
-                    </Button>
-
-                    <Button variation="outlined" className="signinbtn" style={{ fontSize: '14px', color: "#EF8354", backgroundColor: "white" }} component={ Link } to={'/signin'}> Logout</Button>
-                  </div>
-              </Menu>
+        </Typography>
+        <div>
+          <IconButton
+            size="large"
+            aria-controls="menu-appbar"
+            aria-haspopup="true"
+            onClick={handleMenu}
+            color="inherit"
+          >
+            <AccountCircle />
+          </IconButton>
+          <Menu
+            id="appbar"
+            anchorEl={anchorEl}
+            anchorOrigin={{
+              vertical: 'top',
+              horizontal: 'right',
+            }}
+            keepMounted
+            transformOrigin={{
+              vertical: 'top',
+              horizontal: 'right',
+            }}
+            open={Boolean(anchorEl)}
+            onClose={handleClose}
+          >
+            <div className="test"> 
+              <Button
+                variation="outlined" 
+                className="dataviewbtn" 
+                style={{ fontSize: '13px', color: "white", backgroundColor: "#F79256" }} 
+                component={ Link } 
+                to={'/dataview'}> 
+                  My Destinations 
+              </Button>
+              <div className="test2">
+              <Button 
+                variation="outlined" 
+                className="signinbtn" 
+                style={{ fontSize: '13px', color: "white", backgroundColor: "#F79256" }} 
+                component={ Link } 
+                to={'/signin'}> 
+                  Logout
+              </Button>
+              </div>
             </div>
+          </Menu>
+        </div>
 
-        </Toolbar>
-      </AppBar>
+      </Toolbar>
+    </AppBar>
 
   );
               }
