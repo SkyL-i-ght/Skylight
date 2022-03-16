@@ -154,3 +154,10 @@ A sample request would look like:
   "password": "myverysafepassword"
 }
 ```
+A sample response would look like:
+
+```JSON
+{
+  "valid": true
+}
+```

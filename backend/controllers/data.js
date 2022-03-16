@@ -7,16 +7,12 @@ data.getFlightsData = (req, res, next) => {
   const lat = parseFloat(req.body.lat);
   const lng = parseFloat(req.body.lng);
 
-  console.log('HELLOOO????')
-
   const params = {
-    lamin: lat - 1,
-    lamax: lat + 1,
-    lomin: lng - 1,
-    lomax: lng + 1
+    lamin: lat - 0.05,
+    lamax: lat + 0.05,
+    lomin: lng - 0.05,
+    lomax: lng + 0.05
   };
-
-  console.log(params);
 
   axios.get('https://opensky-network.org/api/states/all', { params })
   .then(response => {
@@ -42,12 +38,34 @@ data.getFlightsData = (req, res, next) => {
   
 };
 
-data.getFlightInfo = (req, res, next)  => {
+data.getFlightDetails = (req, res, next) => {
 
-  console.log(new Date());
+  const params = {
+    access_key: process.env.AVIATIONSTACK_KEY,
+    flight_icao: req.params.callsign
+  };
 
-  return next();
-}
+  const timeoutErr = {
+    log: 'Request timed out after 3000ms',
+    status: 500,
+    message: { err: 'Request timed out after 3000ms' }
+  };
+
+  const wrapperPromise = new Promise((resolve, reject) => {
+    setTimeout(() => reject(timeoutErr), 3000);
+    axios.get('https://api.aviationstack.com/v1/flights', { params })
+    .then(response => {
+      res.locals.flightDetails = response.data;
+      resolve('Success');
+    })
+    .catch(e => reject(e));
+  });
+
+  wrapperPromise
+    .then(() => next())
+    .catch(e => next(e));
+  
+};
 
 
 module.exports = data;
