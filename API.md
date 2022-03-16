@@ -97,9 +97,7 @@ The request body will look like this:
 
 ```JSON
 {
-  "airport": "Kona International Airport",
-  "city": "Honolulu",
-  "country": "USA",
+  "name": "Kona International Airport, Honolulu, USA",
   "description": "Beautiful city with magnificent views of the Pacific Ocean and delightful beaches."
 }
 ```
