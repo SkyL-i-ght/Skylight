@@ -18,7 +18,7 @@ api.get('/flightinfo/:callsign', data.getFlightDetails, (req, res) => {
 });
 
 api.post('/user/signup', userController.signUp, (req, res) => {
-  res.json(res.locals);
+  res.json({valid: true});
 });
 
 api.post('/user/login', userController.login, (req, res) => {
