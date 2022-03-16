@@ -67,6 +67,23 @@
   justify-content: space-between
 }
 
+.destCard {
+  width: 1000px;
+}
+
+.accordian {
+  margin-top: 100px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center
+}
+
+.myDests {
+  margin-bottom: 60px;
+}
+
+
 
 
 
