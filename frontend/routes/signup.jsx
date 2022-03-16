@@ -14,6 +14,7 @@ import { Link } from 'react-router-dom';
 const theme = createTheme();
 
 export default function SignUp() {
+  
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -21,6 +22,21 @@ export default function SignUp() {
       username: data.get('username'),
       password: data.get('password'),
     });
+
+    const options = {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+    }
+
+    fetch('/api/user/signup', options)
+    .then(res => res.json())
+    .then(data => {
+      if (data.valid) {
+
+      } else {
+
+      }
+    })
   };
 
   return (
