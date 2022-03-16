@@ -40,22 +40,34 @@ data.getFlightsData = (req, res, next) => {
 
 data.getFlightDetails = (req, res, next) => {
 
+  const date = new Date();
+  const flight_date = `${date.getFullYear()}-${String(date.getMonth()+1).padStart(2, 0)}-${String(date.getDate()).padStart(2, 0)}`
+  const regex = /([\D]+)([\d]+)$/i;
+  flight_icao = req.params.callsign.trim();
+  airline_icao = req.params.callsign.match(regex)[1];
+  flight_number = req.params.callsign.match(regex)[2];
+
   const params = {
     access_key: process.env.AVIATIONSTACK_KEY,
-    flight_icao: req.params.callsign
+    flight_date,
+    flight_icao,
+    airline_icao,
+    flight_number
   };
 
+  console.log(params);
+
   const timeoutErr = {
-    log: 'Request timed out after 3000ms',
+    log: 'Request timed out',
     status: 500,
-    message: { err: 'Request timed out after 3000ms' }
+    message: { err: 'Request timed out' }
   };
 
   const wrapperPromise = new Promise((resolve, reject) => {
     setTimeout(() => reject(timeoutErr), 3000);
     axios.get('https://api.aviationstack.com/v1/flights', { params })
     .then(response => {
-      res.locals.flightDetails = response.data;
+      res.locals.flightDetails = response.data.data[0];
       resolve('Success');
     })
     .catch(e => reject(e));
