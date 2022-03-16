@@ -2,6 +2,7 @@ import React from 'react';
 import { GoogleMap, useJsApiLoader } from '@react-google-maps/api';
 import { useLocation } from 'react-router-dom';
 import AircraftController from '../components/AircraftController.jsx'
+import Navbar from '../components/Navbar.jsx';
 
 function MapView (props) {
   
@@ -35,11 +36,10 @@ function MapView (props) {
   }, []);
 
   return isLoaded ? (
-    <div> 
+    <div className="banner"> 
+    <Navbar/>
       <div> 
-        <h1>Test</h1>
-      </div>
-    <GoogleMap
+        <GoogleMap
       mapContainerStyle = { containerStyle }
       center = { center }
       onLoad = { onLoad }
@@ -49,6 +49,8 @@ function MapView (props) {
       {<AircraftController />}
       <></>
     </GoogleMap> 
+      </div>
+
     </div>
   ) : <></>
 };

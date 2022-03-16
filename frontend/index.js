@@ -15,7 +15,7 @@ import Navbar from './components/Navbar.jsx';
 render(
   
   <BrowserRouter> 
-  <Navbar/>
+
     <Routes>
         <Route path='/' element={<App />} />
         <Route path='mapview' element={<Mapview />} />

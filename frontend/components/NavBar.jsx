@@ -9,7 +9,7 @@ import { flexbox } from '@material-ui/system';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import { Outlet, Link } from 'react-router-dom';
-import LogoIcon from '../assets/SkyLight.png';
+import LogoIcon from '../assets/SkyLight2.png';
 
 export default function Navbar() {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -23,18 +23,18 @@ export default function Navbar() {
   };
 
   return (
-    <AppBar position="static">
+    <AppBar className="appbar" style={{ backgroundColor: "#EF8354" }} >
       <Toolbar className ="myToolbar" > 
-      <img src={LogoIcon} />
+      <img className="logo" src={LogoIcon} />
     <IconButton 
-      edge="start"
-      aria-label="account of current user"
+      
+      aria-label="access logout or user destinations"
       aria-controls="menu-appbar"
       aria-haspopup="true"
       onClick={handleMenu}
       color="inherit"
     >
-      <MenuIcon sx={{ marginLeft: "auto" }}/>
+      <MenuIcon className ="hamburger" sx={{ marginLeft: "auto" }}/>
     </IconButton>
     <Menu
                 id="menu-appbar"

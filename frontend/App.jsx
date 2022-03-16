@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { Outlet, Link } from 'react-router-dom';
-import Navbar from './components/Navbar.jsx';
 import { Button } from '@mui/material';
+import Plane from '../frontend/assets/plane2.gif';
+import Navbar from './components/Navbar.jsx';
+
 
 class App extends Component {
   constructor(props) {
@@ -58,10 +60,16 @@ class App extends Component {
 
   render() {
     return(
-      <div>
-        <div>
-          <h1> Find planes near me</h1>
-          <Button component={ Link } to={'/mapview'} state={{ coords: this.state.coords, bindingBox: this.state.bindingBox }}> My button </Button>
+      
+      <div className="mainContainer">
+        <Navbar/>
+        <div >
+          <div className="overlay">
+          <img className="plane" src={Plane} />
+          
+          <Button variant="contained" style={{ fontSize: '18px', color: "#F79256", backgroundColor: "white" }} className="findPlanesButton" component={ Link } to={'/mapview'} state={{ coords: this.state.coords, bindingBox: this.state.bindingBox }}> Find planes near me </Button>
+          </div>
+         
         </div>
         {/* <Link to='/mapview' state={{ coords: this.state.coords, bindingBox: this.state.bindingBox }}>MapView</Link> */}
         <Outlet />
