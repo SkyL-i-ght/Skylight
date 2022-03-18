@@ -16,8 +16,8 @@ function MapView (props) {
   const center = { ...location.state.coords };
   
   const containerStyle = {
-    width: '600px',
-    height: '600px',
+    width: '900px',
+    height: '900px',
     };
   
   const { isLoaded } = useJsApiLoader({
@@ -26,6 +26,7 @@ function MapView (props) {
   });
 
   const [map, setMap] = React.useState(null);
+  const markers = [];
 
   const onLoad = React.useCallback((map) => {
     console.log(center);
@@ -34,30 +35,59 @@ function MapView (props) {
     map.fitBounds(bounds);
     setMap(map);
 
-    const markers = [];
 
     function genPlanes () {
-      markers.forEach(marker => marker.setMap(null));
+      while (markers.length) {
+        const val = markers.pop();
+        val.setMap(null);
+      };
 
-      fetch('/api/flight', {
-        method: 'GET',
-        body: JSON.stringify( {lat: center.lat, lng: center.lng })
-      })
-      .then(res => res.json()) 
+      fetch(`/api/flights?lat=${center.lat}&lng=${center.lng}`)
       .then(res => {
-        for (let i = 0; i < res.length; i++) {
-          markers.push( new google.maps.Marker({
-            position: {lat:res[i].lat, lng:res[i].lng},
-            icon: {...icon, rotation: -50 + res[i].direction},
+        return res.json()
+      }) 
+      .then(respon => {
+        for (let i = 0; i < respon.length; i++) {
+          const mark = new google.maps.Marker({
+            position: {lat:respon[i].lat, lng:respon[i].lng},
+            icon: {...icon, rotation: -50 + respon[i].direction},
             map: map,
-          }));
+          });
+          markers.push(mark);
+          
+          mark.addListener('click', () => {
+            fetch(`/api/flightinfo/${respon[i].callsign}`)
+            .then(res => res.json())
+            .then(res => {
+              console.log(res);
+              const contentstring = `
+              <div>
+              <p>Callsign: ${respon[i].callsign}</p></br>
+              <p>Departed From: ${res.departure ? res.departure.airport : "unknown" }</p></br>
+              <p>Destination: ${res.arrival ? res.arrival.airport : 'unknown '}</p></br>
+              <p>Arrival Timezone: ${res.arrival ? res.arrival.timezone : 'unknown' }</p></br>
+              <p>Altitude: ${respon[i].altitude}</p></br>
+              <button>Add to Favorites</button>
+              </div>
+              `
+              const infoWindow = new window.google.maps.InfoWindow({
+                content: contentstring
+              });
+              infoWindow.open({
+                anchor: mark,
+                map,
+                shouldFocus: false,
+              })
+            })
+          });
+
         };
       })
-  
     }
 
     genPlanes();
     setInterval((() => genPlanes()), 15000);
+    
   }, []);
   
   const onUnmount = React.useCallback((map) => {

@@ -3,6 +3,7 @@ const userController = require('../controllers/users');
 const express = require('express');
 const data = require('../controllers/data');
 const validation = require('../controllers/validation');
+const favoritesController = require('../controllers/favorites');
 
 const api = express.Router();
 
@@ -17,23 +18,27 @@ api.get('/flightinfo/:callsign', data.getFlightDetails, (req, res) => {
 });
 
 api.post('/user/signup', userController.signUp, (req, res) => {
-  res.json(res.locals);
+  res.json({valid: true});
 });
 
 api.post('/user/login', userController.login, (req, res) => {
-  res.send('Success');
+  res.send('Successfully logged in');
 });
 
 api.post('/user/logout', userController.logout, (req, res) => {
-  res.send('Success');
+  res.send('Successfully logged out');
 });
 
-api.post('/favorites/add', (req, res) => {
-  res.send('favorites add');
+api.get('/favorites', favoritesController.getAll, (req, res) => {
+  res.json(res.locals.rows);
 });
 
-api.delete('/favorites/delete', (req, res) => {
-  res.send('favorites delegte');
+api.post('/favorites/add', favoritesController.addOne, (req, res) => {
+  res.json(res.locals);
+});
+
+api.delete('/favorites/delete', favoritesController.removeOne, (req, res) => {
+  res.json('Successfully deleted');
 });
 
 
